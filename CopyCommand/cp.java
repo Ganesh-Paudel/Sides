@@ -46,7 +46,38 @@ public class cp{
 		}
 
 		if(args.length > 2){
-			System.out.println("Files into a directory");
+			int totalFiles = args.length - 1;
+			String[] inputFiles = new String[totalFiles];
+
+			for(int i = 0; i < totalFiles; i ++){
+				inputFiles[i] = args[i];
+			}
+
+			int fileCount = 0;
+
+			while(fileCount < totalFiles) {
+				Path inputPath = Paths.get(inputFiles[fileCount]);
+				String outPath = args[args.length - 1] + inputFiles[fileCount];
+				Path outputPath = Paths.get(outPath);
+
+				try(FileChannel inChannel = FileChannel.open(inputPath, StandardOpenOption.READ); FileChannel outChannel = FileChannel.open(outputPath, StandardOpenOption.CREATE, StandardOpenOption.WRITE)){
+
+					ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+					while(inChannel.read(buffer) != -1){
+						buffer.flip();
+						outChannel.write(buffer);
+						buffer.clear();
+					}
+
+					fileCount++;
+
+				} catch (NoSuchFileException e){
+					System.out.println("File is missing");
+				} catch (IOException e){
+					System.err.println("General IO error");
+				}
+			}
 		}
 
 
