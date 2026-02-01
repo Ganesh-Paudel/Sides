@@ -10,5 +10,8 @@ My implementation so far, copies content of a file that should exist (for obviou
 
 ```bash
 javac cp.java
-javac cp file1 file2
+java cp file1 file2
+java cp file1 file2 directory
+```
+It works for basic copying command.
 
