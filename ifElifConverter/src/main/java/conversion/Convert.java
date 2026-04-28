@@ -58,6 +58,9 @@ public class Convert {
       indentation = getIndent();
       ss.append("\n").append(indentation).append(newLine);
     } else {
+      if (line.startsWith("if")) {
+        indentMultiplicity = 0;
+      }
       String indentation = getIndent();
       ss.append("\n").append(indentation + line);
     }
